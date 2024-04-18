@@ -7,6 +7,7 @@ import type { Site } from '@schemas/Site'
 import { t } from 'src/utils/i18n'
 import { extractFlowTime } from '../../firebase/helpers'
 import Page from '@layouts/Page.astro'
+import { FilterPanel } from '@components/solid/app/FilterPanel'
 
 const db = getFirestore()
 const sitesRef = db.collection('sites')
@@ -53,13 +54,21 @@ sites.sort((a, b) => {
   }
   return 0
 })
+
+const filterOptions = {
+  ll: "löllö",
+  dd: "D&D"
+}
+
+const sortOptions = {
+  flowTime: "Flow time",
+  name: "Name",
+}
 ---
 
 <Page title={t('sites:siteList.title')} poster="/images/juno-viinikka-saana-viinikka-waawaa-small.webp">
   <div class="content-cards">
-    <div class="filter-panel border surface-44">
-      <h4>{t('sites:siteList.title')}</h4>
-    </div>
+    <FilterPanel filterOptions={filterOptions} sortOptions={sortOptions} client:only="solid-js"/>
     {sites.map((site) => <SiteListItem site={site} />)}
   </div>
 </Page>

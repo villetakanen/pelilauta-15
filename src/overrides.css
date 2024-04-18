@@ -42,3 +42,6 @@ header.cn-app-bar h3 {
 .content-cards {
   align-items: flex-start;
 }
+.hidden {
+  display: none;
+}
