@@ -1,0 +1,18 @@
+---
+import AppRail from '../components/app/AppRail.astro'
+import BaseHead from '../components/app/BaseHead.astro'
+import AppBar from '../components/app/AppBar.astro'
+
+const { title } = Astro.props
+---
+
+<html lang="fi">
+  <BaseHead />
+  <body>
+    <AppBar title={title} />
+    <AppRail />
+    <main class="content-editor">
+      <slot />
+    </main>
+  </body>
+</html>

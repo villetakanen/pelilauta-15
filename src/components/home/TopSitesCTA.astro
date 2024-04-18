@@ -1,0 +1,50 @@
+---
+/**
+ * Fetches the last 3 changed public sites from the firestore, and shows
+ * them as cn-cards
+ */
+
+import { db } from '../../firebase/server'
+import type { Site } from '@schemas/Site'
+import { SiteSchema } from '@schemas/Site'
+import { extractFlowTime } from '../../firebase/helpers'
+import { systemToNoun } from '@schemas/conversions'
+
+const query = db
+  .collection('sites')
+  .orderBy('flowTime', 'desc')
+  .orderBy('posterURL', 'desc')
+  .where('hidden', '==', false)
+  .limit(3)
+
+const sites: Array<Site> = []
+
+const data = await query.get()
+
+data.forEach((doc) => {
+  sites.push(
+    SiteSchema.parse({
+      ...doc.data(),
+      key: doc.id,
+      flowTime: extractFlowTime(doc.data()),
+    }),
+  )
+})
+---
+
+<div>
+  {
+    sites.map((site) => (
+      <cn-card
+        key={site.key}
+        title={site.name}
+        cover={site.posterURL}
+        noun={systemToNoun(site.system)}
+        href={`/sites/${site.key}`}
+        style="margin-bottom: var(--cn-gap)"
+      >
+        <p class="small">{site.description}</p>
+      </cn-card>
+    ))
+  }
+</div>

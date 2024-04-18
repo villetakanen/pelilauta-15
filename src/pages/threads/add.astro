@@ -1,0 +1,15 @@
+---
+import { getSessionUser } from '@firebase/server'
+import { t } from 'src/utils/i18n'
+import ThreadEditorForm from '@components/solid/threads/ThreadEditorForm'
+import EditorPage from '@layouts/EditorPage.astro'
+
+const user = await getSessionUser(Astro.cookies)
+
+// No user, can not access this page
+if (!user) Astro.redirect('/logpnpin')
+---
+
+<EditorPage title={t('actions:addThread')}>
+  <ThreadEditorForm client:only="solid-js" />
+</EditorPage>

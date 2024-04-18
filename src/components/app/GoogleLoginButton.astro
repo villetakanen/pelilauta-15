@@ -1,0 +1,39 @@
+---
+import { t } from 'src/utils/i18n'
+---
+
+<button data-google-login-button>
+  <cn-icon noun="google"></cn-icon>
+  <span>{t('actions:loginWithGoogle')}</span>
+</button>
+
+<script>
+  import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+  import { app } from '../../firebase/client'
+
+  const buttons = document.querySelectorAll('[data-google-login-button]')
+  const auth = getAuth(app)
+
+  async function login() {
+    const provider = new GoogleAuthProvider()
+    const userCredential = await signInWithPopup(auth, provider)
+    const idToken = await userCredential.user.getIdToken()
+    console.log('idToken', idToken)
+    const res = await fetch('/api/auth/signin', {
+      headers: {
+        Authorization: `Bearer ${idToken}`,
+      },
+    })
+
+    if (res.redirected) {
+      window.location.assign(res.url)
+    }
+  }
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      console.log('Login button click')
+      login()
+    })
+  })
+</script>

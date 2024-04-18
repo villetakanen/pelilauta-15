@@ -1,0 +1,18 @@
+---
+interface Props {
+  title?: string
+  menu?: boolean
+}
+
+const { title } = Astro.props
+const barTitle = title || 'Pelilauta 2'
+---
+
+<header class="cn-app-bar">
+  <cn-tray-button></cn-tray-button>
+  <div class="titleContainer"><h3>{barTitle}</h3></div>
+  <div style="flex: 1"></div>
+  <slot />
+  <cn-lightmode-button class="hide-sm"></cn-lightmode-button>
+  <cn-share-button></cn-share-button>
+</header>

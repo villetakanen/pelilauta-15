@@ -1,0 +1,44 @@
+.cn-app-tray {
+  container: cnAppTray;
+}
+:root {
+  --cn-color-shadow: black;
+}
+.avatar {
+  container: avatar;
+  width: calc(var(--cn-grid) * 8);
+  height: calc(var(--cn-grid) * 8);
+  border-radius: 50%;
+}
+.avatar .placeholder {
+  font-size: calc(var(--cn-grid) * 4);
+  text-align: center;
+  text-transform: uppercase;
+  line-height: calc(var(--cn-grid) * 8);
+  display: block;
+}
+.cn-app-bar {
+  position: relative;
+  z-index: 100000;
+  mix-blend-mode: hard-light;
+}
+header.cn-app-bar {
+  text-shadow: 0 0 16px var(--cn-color-shadow);
+}
+header.cn-app-bar h3 {
+  position: relative;
+  display: block;
+  color: var(--color-on-primary);
+}
+.loadingCard {
+  background: hsla(var(--chroma-S-K-hsl), 0.44);
+  border-radius: var(--cn-border-radius);
+  padding: var(--cn-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cn-gap);
+}
+.content-cards {
+  align-items: flex-start;
+}

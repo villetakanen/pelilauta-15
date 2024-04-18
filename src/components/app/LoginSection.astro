@@ -1,0 +1,16 @@
+---
+import { getSessionUser } from '../../firebase/server'
+import GoogleLoginButton from './GoogleLoginButton.astro'
+
+const user = await getSessionUser(Astro.cookies)
+const visible = !user.uid
+console.log('visible', visible, user)
+---
+
+{
+  visible && (
+    <section>
+      <GoogleLoginButton />
+    </section>
+  )
+}

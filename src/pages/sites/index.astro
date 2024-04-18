@@ -1,0 +1,65 @@
+---
+import SiteListItem from '../../components/sites/SiteListItem.astro'
+import { getSessionUser } from '../../firebase/server'
+import { getFirestore } from 'firebase-admin/firestore'
+import { SiteSchema } from '@schemas/Site'
+import type { Site } from '@schemas/Site'
+import { t } from 'src/utils/i18n'
+import { extractFlowTime } from '../../firebase/helpers'
+import Page from '@layouts/Page.astro'
+
+const db = getFirestore()
+const sitesRef = db.collection('sites')
+
+const snapshot = await sitesRef.where('hidden', '==', false).get()
+
+if (snapshot.empty) {
+  console.log('No matching documents.')
+}
+const sites: Array<Site> = []
+snapshot.forEach((doc) => {
+  if (!doc.exists) return
+  sites.push(
+    SiteSchema.parse({
+      ...doc.data(),
+      key: doc.id,
+      flowTime: extractFlowTime(doc.data()),
+    }),
+  )
+})
+
+const user = await getSessionUser(Astro.cookies)
+if (user?.uid) {
+  const userSitesRef = db
+    .collection('sites')
+    .where('owners', 'array-contains', user.uid)
+  const userSitesSnapshot = await userSitesRef.get()
+  userSitesSnapshot.forEach((doc) => {
+    if (!doc.exists) return
+    if (sites.find((site) => site.key === doc.id)) return
+    sites.push(
+      SiteSchema.parse({
+        ...doc.data(),
+        key: doc.id,
+        flowTime: extractFlowTime(doc.data()),
+      }),
+    )
+  })
+}
+
+sites.sort((a, b) => {
+  if (a.flowTime && b.flowTime) {
+    return b.flowTime - a.flowTime
+  }
+  return 0
+})
+---
+
+<Page title={t('sites:siteList.title')} poster="/images/juno-viinikka-saana-viinikka-waawaa-small.webp">
+  <div class="content-cards">
+    <div class="filter-panel border surface-44">
+      <h4>{t('sites:siteList.title')}</h4>
+    </div>
+    {sites.map((site) => <SiteListItem site={site} />)}
+  </div>
+</Page>

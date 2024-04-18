@@ -1,0 +1,15 @@
+---
+import EulaText from '../content/fi/eula.md'
+import SingleColumnLayout from '../layouts/SingleColumnLayout.astro'
+import { CreateAccountForm } from '../components/solid/register/CreateAccountForm'
+import { getSessionUser } from '../firebase/server'
+
+const { uid } = await getSessionUser(Astro.cookies)
+---
+
+<SingleColumnLayout>
+  <div>
+    <EulaText />
+    <CreateAccountForm client:visible {uid} />
+  </div>
+</SingleColumnLayout>

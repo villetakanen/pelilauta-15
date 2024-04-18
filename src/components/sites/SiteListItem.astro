@@ -1,0 +1,33 @@
+---
+import { LoveSiteButton } from '@components/solid/sites/LoveSiteButton'
+import type { Site } from '@schemas/Site'
+import { systemToNoun } from '@schemas/conversions'
+import { toLocaleString } from 'src/utils/toLocaleString'
+
+interface Props {
+  site: Site
+}
+const { site } = Astro.props
+const flowTime = toLocaleString(site.flowTime)
+
+const noun = systemToNoun(site.system)
+---
+
+<cn-card
+  title={site.name}
+  href=`/sites/${site.key}`
+  cover={site.posterURL}
+  noun={noun}
+>
+  <p class="small">
+    {site.description}
+  </p>
+  <div slot="actions">
+    <div class="flex toolbar px-0 site-list-item-meta">
+      <p class="text-caption">{flowTime}</p>
+    </div>
+    <div class="flex toolbar px-0 site-list-item-reactions">
+      <LoveSiteButton site={site} client:visible />
+    </div>
+  </div>
+</cn-card>

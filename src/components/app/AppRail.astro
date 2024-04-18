@@ -1,0 +1,73 @@
+---
+import { t } from 'src/utils/i18n'
+import { ProfileButton } from '../solid/app/ProfileButton'
+import { getSessionUser } from '../../firebase/server'
+const currentPath = Astro.url.pathname
+
+type RailItem = {
+  label?: string
+  href: string
+  icon: string
+}
+
+const rail: Array<RailItem> = [
+  {
+    href: '/',
+    icon: 'veil-advance',
+  },
+  {
+    href: '/forum',
+    icon: 'discussion',
+    label: t('navigation:discussion'),
+  },
+  {
+    href: '/sites',
+    icon: 'mekanismi',
+    label: t('navigation:sites'),
+  },
+  {
+    href: '/characters',
+    icon: 'tokens',
+    label: t('navigation:characters'),
+  },
+  {
+    href: '/library',
+    icon: 'books',
+    label: t('navigation:library'),
+  },
+]
+
+const { uid } = await getSessionUser(Astro.cookies)
+const showAdminTools = Astro.cookies.get('showAdminTools')?.value === 'true'
+---
+
+<nav class="rail">
+  {
+    rail.map((item) => {
+      const isActive = currentPath === item.href
+      return (
+        <a href={item.href}>
+          <cn-navigation-icon
+            active={isActive}
+            noun={item.icon}
+            label={item.label}
+            checked={currentPath === item.href}
+          />
+        </a>
+      )
+    })
+  }
+  <div style="flex-grow: 1;"></div>
+  {
+    showAdminTools && (
+      <a href="/admin">
+        <cn-navigation-icon
+          noun="admin"
+          label={t('navigation:admin')}
+          checked={currentPath === '/admin'}
+        />
+      </a>
+    )
+  }
+  <ProfileButton client:only="solid-js" uid={uid} />
+</nav>

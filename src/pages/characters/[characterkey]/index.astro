@@ -1,0 +1,29 @@
+---
+import { getFirestore } from 'firebase-admin/firestore'
+import { CharacterSchema } from '@schemas/Character'
+import { extractFlowTime } from '../../../firebase/helpers'
+import CharacterSheet from '../../../components/solid/character/CharacterSheet.tsx'
+import Page from '@layouts/Page.astro'
+
+interface Props {
+  characterkey: string
+}
+const { characterkey } = Astro.params
+
+const db = getFirestore()
+const siteRef = db.collection('characters').doc(characterkey + '')
+const siteDoc = await siteRef.get()
+const character = CharacterSchema.parse({
+  ...siteDoc.data(),
+  key: siteDoc.id,
+  flowTime: extractFlowTime(siteDoc.data()),
+})
+---
+
+<Page title={character.name}>
+  <div class="content-columns">
+    <div class="column-l">
+      <CharacterSheet character={character} client:visible />
+    </div>
+  </div>
+</Page>

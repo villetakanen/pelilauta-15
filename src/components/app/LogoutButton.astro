@@ -1,0 +1,16 @@
+---
+import { getSessionUser } from '../../firebase/server'
+import { t } from 'src/utils/i18n'
+
+const user = await getSessionUser(Astro.cookies)
+const visible = !!user.uid
+---
+
+{
+  visible && (
+    <form action="/api/auth/signout">
+      <button data-logout-button>{t('actions:logout')}</button>
+    </form>
+  )
+}
+<script></script>

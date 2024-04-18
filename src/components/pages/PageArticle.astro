@@ -1,0 +1,51 @@
+---
+import { db } from '../../firebase/server'
+import { PageSchema } from '@schemas/Page'
+import { extractFlowTime } from '../../firebase/helpers'
+import { marked } from 'marked'
+
+interface Props {
+  sitekey: string
+  pagekey: string
+}
+const { sitekey, pagekey } = Astro.props
+
+const pageRef = db
+  .collection('sites')
+  .doc(sitekey)
+  .collection('pages')
+  .doc(pagekey)
+const pageDoc = await pageRef.get()
+const page = PageSchema.parse({
+  ...pageDoc.data(),
+  owners: pageDoc.data()?.owners || [],
+  key: pagekey,
+  parentKey: sitekey,
+  flowTime: extractFlowTime(pageDoc.data()),
+})
+const content = page.markdownContent
+  ? marked.parse(page.markdownContent || '')
+  : page.htmlContent
+---
+
+<div class="column-l pageArticle border-radius-sm surface-44">
+  <div class="page-header flex small border-b pb-1 mb-1">
+    <span>{page.name}</span>
+    <div class="flex-grow"></div>
+    <span>{new Date(page.flowTime).toLocaleDateString('fi')}</span>
+  </div>
+
+  <article set:html={content} class="pt-1" />
+
+  <div class="page-tailer flex small border-t">
+    <p>{page.name}</p>
+    <div class="flex-grow"></div>
+    <p>{new Date(page.flowTime).toLocaleDateString('fi')}</p>
+  </div>
+</div>
+
+<style>
+.pageArticle {
+  padding: var(--cn-gap)
+}
+</style>

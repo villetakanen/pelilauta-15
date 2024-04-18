@@ -1,0 +1,43 @@
+---
+import LoginSection from '../components/app/LoginSection.astro'
+import LogoutButton from '../components/app/LogoutButton.astro'
+import { LiveStream } from '../components/solid/forum/LiveStream/LiveStream'
+import TopSitesCTA from '../components/home/TopSitesCTA.astro'
+import MyrrysRSSCTA from '../components/home/MyrrysRSSCTA.astro'
+import Page from '@layouts/Page.astro'
+import { getSessionUser } from '@firebase/server'
+import FabTray from '@components/app/FabTray.astro'
+import { t } from 'src/utils/i18n'
+
+const user = await getSessionUser(Astro.cookies)
+const fabs = !!user.uid
+---
+
+<Page poster="/images/juno-viinikka-dragon-1.webp">
+  <div class="content-columns">
+    <div>
+      <LiveStream client:load />
+    </div>
+
+    <div class="column-s surface-44 border-radius">
+      <MyrrysRSSCTA />
+    </div>
+
+    <div class="column-s">
+      <TopSitesCTA />
+      <LoginSection />
+      <LogoutButton />
+    </div>
+  </div>
+
+  {
+    fabs && (
+      <FabTray slot="fabs">
+        <a href="threads/add" class="fab">
+          <cn-icon noun="add" small />
+          <span>{t('actions:addThread')}</span>
+        </a>
+      </FabTray>
+    )
+  }
+</Page>

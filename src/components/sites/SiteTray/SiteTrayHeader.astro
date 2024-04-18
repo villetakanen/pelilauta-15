@@ -1,0 +1,15 @@
+---
+import type { Site } from '@schemas/Site'
+import { systemToNoun } from '@schemas/conversions'
+interface Props {
+  site: Site
+}
+const { site } = Astro.props
+---
+
+<section class="mb-1">
+  <h3>
+    <cn-icon noun={systemToNoun(site.system)}></cn-icon>
+    <span>{site.name}</span>
+  </h3>
+</section>

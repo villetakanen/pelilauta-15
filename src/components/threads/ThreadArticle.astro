@@ -1,0 +1,19 @@
+---
+import type { Profile } from '@schemas/Profile'
+import type { Thread } from '@schemas/Thread'
+import { marked } from 'marked'
+
+interface Props {
+  thread: Thread
+  author: Profile
+}
+const { thread } = Astro.props
+const pageContent = thread.markdownContent
+  ? marked(thread.markdownContent)
+  : thread.htmlContent
+---
+
+<article class="column-l">
+  <h1 class="downscaled">{thread.title}</h1>
+  <section set:html={pageContent} />
+</article>

@@ -1,0 +1,54 @@
+---
+import Page from '@layouts/Page.astro'
+import { db } from '@firebase/server'
+import { ThreadSchema } from '@schemas/Thread'
+import { ProfileSchema } from '@schemas/Profile'
+import { extractFlowTime } from '@firebase/helpers'
+import ThreadArticle from 'src/components/threads/ThreadArticle.astro'
+import { ThreadDiscussion } from '@components/solid/forum/ThreadDiscussion'
+import ThreadInfoSection from '@components/threads/ThreadInfoSection.astro'
+
+const { threadkey } = Astro.params
+
+if (!threadkey) {
+  return {
+    status: 404,
+    error: 'Not Found',
+  }
+}
+
+const threadData = (await db.collection('stream').doc(threadkey).get()).data()
+
+if (!threadData) {
+  return {
+    status: 404,
+    error: 'Not Found',
+  }
+}
+
+const authorData = (
+  await db.collection('profiles').doc(threadData.author).get()
+).data()
+const author = ProfileSchema.parse({
+  ...authorData,
+  key: threadData.author,
+})
+
+const thread = ThreadSchema.parse({
+  ...threadData,
+  key: threadkey,
+  flowTime: extractFlowTime(threadData),
+})
+---
+
+<Page title={thread.title}>
+  <div class="content-columns">
+    <ThreadArticle thread={thread} author={author} />
+    <ThreadInfoSection thread={thread} author={author} />
+  </div>
+  <div class="content-columns">
+    <div class="column-l py-1">
+      <ThreadDiscussion {...thread} client:visible />
+    </div>
+  </div>
+</Page>

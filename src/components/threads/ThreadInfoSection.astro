@@ -1,0 +1,24 @@
+---
+import type { Thread } from '@schemas/Thread'
+import type { Profile } from '@schemas/Profile'
+import { AvatarImage } from '@components/solid/profile/AvatarImage.tsx'
+import { toLocaleString } from 'src/utils/toLocaleString'
+
+interface Props {
+  thread: Thread
+  author: Profile
+}
+const { thread, author } = Astro.props
+
+const flowDate = toLocaleString(thread.flowTime)
+---
+
+<section class="border-b border-t flex column-s">
+  <div>
+    <AvatarImage {...author} client:load />
+  </div>
+  <div class="flex flex-column py-1 my-1 flex-grow">
+    <p class="text-right text-caption">{author.nick}</p>
+    <p class="text-right text-caption">{flowDate}</p>
+  </div>
+</section>

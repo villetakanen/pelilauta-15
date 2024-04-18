@@ -1,0 +1,35 @@
+---
+import PageArticle from '../../../components/pages/PageArticle.astro'
+import { getFirestore } from 'firebase-admin/firestore'
+import { SiteSchema } from '@schemas/Site'
+import { extractFlowTime } from '../../../firebase/helpers'
+import SiteListItem from '../../../components/sites/SiteListItem.astro'
+import Page from '@layouts/Page.astro'
+import SiteTray from '@components/sites/SiteTray/SiteTray.astro'
+import { t } from 'src/utils/i18n'
+
+const { sitekey } = Astro.params
+
+const db = getFirestore()
+const siteRef = db.collection('sites').doc(sitekey + '')
+const siteDoc = await siteRef.get()
+const site = SiteSchema.parse({
+  ...siteDoc.data(),
+  key: siteDoc.id,
+  flowTime: extractFlowTime(siteDoc.data()),
+})
+
+const homepageSlug = site.homepage || site.key
+---
+
+<Page title={t('sites:homePageTitle')} poster="/images/juno-viinikka-dragon-1.webp">
+  <div slot="tray">
+    <SiteTray site={site} />
+  </div>
+  <div class="content-columns">
+    <PageArticle sitekey={site.key} pagekey={homepageSlug} />
+    <div class="column-s">
+      <SiteListItem site={site} />
+    </div>
+  </div>
+</Page>

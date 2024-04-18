@@ -1,0 +1,87 @@
+---
+/**
+ * 1. Load Site Index, if any
+ * 2. If site index is not found, create a new one
+ * 2.1. load all pages of the site
+ * 2.2. create a map of all pages
+ * 2.3. create a new site index to the firestore
+ * 3. As site index is (now) found, present the index
+ */
+import type { Site } from '@schemas/Site'
+import { db } from '../../../firebase/server'
+import { z } from 'zod'
+import { t } from 'src/utils/i18n'
+import { extractFlowTime } from '../../../firebase/helpers'
+
+interface Props {
+  site: Site
+}
+
+const SiteIndexItemSchema = z.object({
+  key: z.string(),
+  name: z.string(),
+  topic: z.string(),
+  flowTime: z.number(),
+})
+type SiteIndexItem = z.infer<typeof SiteIndexItemSchema>
+
+const { site } = Astro.props
+
+// Get the index of the site
+const siteIndexDoc = await db
+  .collection('sites')
+  .doc(site.key)
+  .collection('meta')
+  .doc('index')
+  .get()
+const index: Array<SiteIndexItem> = []
+if (!siteIndexDoc.exists || siteIndexDoc.data() === undefined) {
+  // Create a new index
+  const pages = await db
+    .collection('sites')
+    .doc(site.key)
+    .collection('pages')
+    .get()
+
+  pages.forEach((page) => {
+    const pageData = page.data()
+    const flowTime = extractFlowTime(pageData)
+    const topic = pageData.topic || ''
+    index.push(
+      SiteIndexItemSchema.parse({
+        key: page.id,
+        name: pageData.name,
+        topic,
+        flowTime,
+      }),
+    )
+  })
+
+  db.collection('sites').doc(site.key).collection('meta').doc('index').set({
+    index,
+  })
+
+  console.warn('Site index not found. Forcibly Created a new one.')
+} else {
+  // Load the existing index
+  const indexData = siteIndexDoc.data()
+  if (indexData !== undefined) {
+    indexData.index.forEach((item: SiteIndexItem) => {
+      index.push(SiteIndexItemSchema.parse(item))
+    })
+  }
+}
+---
+
+<section class="py-1">
+  <h4 class="downscaled border-b mb-0">{t('sites:pageIndexTitle')}</h4>
+  <ul>
+    {
+      index.map((item) => (
+        <li>
+          <a href={`/sites/${site.key}/pages/${item.key}`}>{item.name}</a>
+        </li>
+      ))
+    }
+  </ul>
+</section>

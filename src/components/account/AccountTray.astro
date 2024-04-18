@@ -1,0 +1,22 @@
+---
+import type { Profile } from '@schemas/Profile'
+import { t } from 'src/utils/i18n'
+
+interface Props {
+  profile: Profile
+  uid: string
+}
+const { profile, uid } = Astro.props
+---
+
+<h3>{t('app:title')}</h3>
+<h4 class="downscaled">{profile.nick}</h4>
+<p class="text-caption">{uid}</p>
+<ul>
+  <li>
+    <a href="/account">{t('account:title')}</a>
+  </li>
+  <li>
+    <a href={`/profile/${uid}`}>{t('profile:title')}</a>
+  </li>
+</ul>

@@ -1,0 +1,63 @@
+---
+/** This is a CTA section for the frontpage that captures the last 3 updates of
+ * https://www.myrrys.com/rss.xml and shows them as small info-blocks with a
+ * link to the full article.
+ */
+import { t } from 'src/utils/i18n'
+import Parser from 'rss-parser'
+
+const parser = new Parser()
+const rssFeed = 'https://www.myrrys.com/rss.xml'
+const rssFeedCount = 3
+
+const feed = await parser.parseURL(rssFeed)
+feed.items = feed.items.slice(0, rssFeedCount)
+---
+
+<section class="cta">
+  <div class="on-top-of-cover">
+    <cn-icon noun="myrrys-scarlet" large alt="Myrrys.com"></cn-icon>
+  </div>
+  <img
+    class="cover"
+    alt="Myrrys.com"
+    src="/images/LetL_gm_screen_splash.webp"
+  />
+  <div class="p-1 m-1">
+  <h4 class="branding downscaled border-b pb-1 mb-1">MYRRYS</h4>
+  
+  {
+    feed.items.map((item) => (
+      <div class="cta_item downscaled pb-1 border-b mb-1">
+        <h4 class="cta_title small">{item.title}</h4>
+        <p class="cta_description">{item.contentSnippet}</p>
+        <p class="align-right">
+          <a class="cta_link" href={item.link}>
+            {t('actions:readMore')}
+          </a>
+        </p>
+      </div>
+    ))
+  }
+  </div>
+</section>
+
+<style>
+  .cta {
+    position: relative;
+  }
+  .branding {
+    text-align: center;
+  }
+  .on-top-of-cover {
+    position: absolute;
+    top: calc(var(--cn-gap) * 6);
+    left: 0;
+    z-index: 1;
+    text-align: center;
+    width: 100%;
+  }
+  .align-right {
+    text-align: right;
+  }
+</style>

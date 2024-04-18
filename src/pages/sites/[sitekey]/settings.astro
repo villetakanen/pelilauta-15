@@ -1,0 +1,26 @@
+---
+import SiteOwnersTool from "@components/sites/SiteOwnersTool/SiteOwnersTool.astro";
+import { extractFlowTime } from "@firebase/helpers";
+import { db } from "@firebase/server";
+import SettingsPage from "@layouts/SettingsPage.astro";
+import { SiteSchema } from "@schemas/Site";
+import { t } from "src/utils/i18n";
+
+const { sitekey } = Astro.params
+
+const siteDoc = await db.collection('sites').doc(sitekey + '').get()
+const site = SiteSchema.parse({
+  ...siteDoc.data(),
+  key: siteDoc.id,
+  flowTime: extractFlowTime(siteDoc.data()),
+})
+---
+<SettingsPage title={t('sites:settings.title')}>
+  <div class="content-columns">
+    <div>
+      <h3 class="downscaled">{t('entries:sites.owners')}</h3>
+      <p>{t('entries:sites.ownersDescription')}</p>
+    </div>
+    <SiteOwnersTool site={site} />
+  </div>
+</SettingsPage>

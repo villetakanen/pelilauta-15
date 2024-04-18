@@ -1,0 +1,48 @@
+---
+/**
+ * A SSR tool for managing a sites owners list
+ */
+import { ProfileLink } from "@components/solid/profile/ProfileLink";
+import { getSessionUser } from "@firebase/server";
+import type { Site } from "@schemas/Site";
+import { t } from "src/utils/i18n";
+import { ProfileSelector } from "@components/solid/profile/ProfileSelector";
+
+interface Props {
+  site: Site
+}
+
+const { site } = Astro.props
+const { uid } = await getSessionUser(Astro.cookies)
+---
+<section class="column">
+  <h3>{t('entries:sites.owners')}</h3>
+  <ul class="list-style-none">
+    {site.owners.map((owner) => (
+      <li>
+        <ProfileLink profileKey={owner} client:visible/>
+        <button class="text" disabled={owner === uid}>
+          <cn-icon noun="login" />
+        </button>
+      </li>
+    ))}
+  </ul>
+  <div class="toolbar">
+    <button id="add-owner">{t('actions:addOwner')}</button>
+  </div>
+  <cn-dialog id="add-owner-dialog">
+    <div slot="header"><h3>{t('actions:addOwner')}</h3></div>
+    <ProfileSelector exclude={site.owners} client:only="solid-js"/>
+  </cn-dialog>
+</section>
+
+<script>
+import type { CnDialog } from "@11thdeg/cyan-next"
+
+const button = document.getElementById('add-owner') as HTMLButtonElement
+const dialog = document.getElementById('add-owner-dialog') as CnDialog
+
+button.addEventListener('click', () => {
+  dialog.showModal()
+})
+</script>
