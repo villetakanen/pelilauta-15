@@ -6,15 +6,18 @@ import AppTray from '../components/app/AppTray.astro'
 import FabTray from '@components/app/FabTray.astro'
 import PagePoster from '@components/app/PagePoster.astro'
 
-const { title, poster } = Astro.props
+const { title, poster, tray } = Astro.props
 ---
 
 <html lang="fi">
   <BaseHead />
   <body>
-    <AppBar title={title} menu />
+    <AppBar
+      title={title}
+      tray={tray}
+    />
     <AppRail />
-    <AppTray><slot name="tray" /></AppTray>
+    {tray ? <AppTray><slot name="tray" /></AppTray> : ''}
     <FabTray><slot name="fabs" /></FabTray>
     <main>
       { poster ? <PagePoster poster={poster} /> : '' }

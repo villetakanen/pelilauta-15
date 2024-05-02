@@ -19,7 +19,8 @@ declare module 'solid-js' {
       'cn-avatar': CnAvatar
       'cn-bubble': HTMLAttributes
       'cn-reaction-button': CnReactionButton
-      'cn-loader': HTMLAttributes
+      'cn-loader': HTMLAttributes,
+      'cn-pill': HTMLAttributes & { label: string, noun: string, checked: boolean }
     }
   }
 }

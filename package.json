@@ -11,14 +11,14 @@
     "lint": "prettier --write src --plugin=prettier-plugin-astro"
   },
   "dependencies": {
-    "@11thdeg/cyan-next": "1.0.0-alpha.68",
+    "@11thdeg/cyan-next": "1.0.0-alpha.70",
     "@astrojs/check": "^0.5.6",
     "@astrojs/lit": "^4.0.1",
     "@astrojs/solid-js": "^4.1.0",
-    "@astrojs/vercel": "^7.5.3",
+    "@astrojs/vercel": "^7.5.4",
     "@nanostores/solid": "^0.4.2",
     "@webcomponents/template-shadowroot": "^0.2.1",
-    "astro": "^4.6.1",
+    "astro": "^4.7.0",
     "firebase": "^10.11.0",
     "firebase-admin": "^12.0.0",
     "lit": "^3.1.3",

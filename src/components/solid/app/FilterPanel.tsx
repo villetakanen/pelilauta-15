@@ -27,13 +27,13 @@ export const FilterPanel:Component<FilterPanelProps> = (props) => {
         </button>
         <div style="flex: 1"></div>
         { props.sortOptions ? Object.keys(props.sortOptions).map((option) => (
-            <button>{props.sortOptions[option]}</button>
+            <button>{props.sortOptions ? props.sortOptions[option] : ''}</button>
          )) : '' }
       </div>
       { props.filterOptions ? (
         <div class="filter-options flex hidden border-radius border p-1">
           { Object.keys(props.filterOptions).map((option) => (
-            <span class="filter-option">{props.filterOptions[option]}</span>
+            <cn-pill label={props.filterOptions ? props.filterOptions[option] : ''}></cn-pill>
           ))}
         </div>
       ) : ''}

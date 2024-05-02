@@ -1,15 +1,15 @@
 ---
 interface Props {
   title?: string
-  menu?: boolean
+  tray?: boolean
 }
 
-const { title } = Astro.props
+const { title, tray } = Astro.props
 const barTitle = title || 'Pelilauta 2'
 ---
 
 <header class="cn-app-bar">
-  <cn-tray-button></cn-tray-button>
+  { tray ? <cn-tray-button></cn-tray-button> : '' }
   <div class="titleContainer"><h3>{barTitle}</h3></div>
   <div style="flex: 1"></div>
   <slot />
