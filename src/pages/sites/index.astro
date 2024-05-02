@@ -8,6 +8,7 @@ import { t } from 'src/utils/i18n'
 import { extractFlowTime } from '../../firebase/helpers'
 import Page from '@layouts/Page.astro'
 import { FilterPanel } from '@components/solid/app/FilterPanel'
+import { SiteCardList } from '@components/solid/sites/SiteCardList'
 
 const db = getFirestore()
 const sitesRef = db.collection('sites')
@@ -54,29 +55,11 @@ sites.sort((a, b) => {
   }
   return 0
 })
-
-const filterOptions = {
-  owner: 'Omistan',
-  player: 'Pelaan',
-  ll: "Legendoja & lohikäärmeitä",
-  dd: "Dungeons & Dragons",
-  hood: 'Hood',
-  thequick: 'The Quick',
-  homebrew: 'Homebrew',
-  pbta: 'Powered by the Apocalypse',
-  pelilauta: 'Pelilauta',
-  myrrys: 'MYRRYS',
-}
-
-const sortOptions = {
-  flowTime: "Muokattu",
-  name: "Nimi",
-}
 ---
 
 <Page title={t('sites:siteList.title')} poster="/images/juno-viinikka-saana-viinikka-waawaa-small.webp">
-  <div class="content-cards">
-    <FilterPanel filterOptions={filterOptions} sortOptions={sortOptions} client:only="solid-js"/>
+  <SiteCardList client:load />
+  <!--div class="content-cards">
     {sites.map((site) => <SiteListItem site={site} />)}
-  </div>
+  </div-->
 </Page>
