@@ -21,10 +21,10 @@ export interface SiteCardProps {
 export const SiteCardList: Component<SiteCardProps> = (props) => {
   const [siteList, setSiteList] = createSignal(new Array<Site>())
   const [filter, setFilter] = createSignal('')
-  const [order, setOrder] = createSignal('flowTime desc')
+  const [sort, setSort] = createSignal('flowTime desc')
 
   createEffect(() => {
-    getSites(0, 11, filter(), order(), props.uid)
+    getSites(0, 11, filter(), sort(), props.uid)
   })
 
   async function getSites(
@@ -35,18 +35,34 @@ export const SiteCardList: Component<SiteCardProps> = (props) => {
     uid = '',
   ) {
     const sites = await fetchSites(offset, limitTo, filter, order, uid)
-    const newSiteList =[siteList(), ...sites]
+    const newSiteList =[...siteList(), ...sites]
     removeDuplicates(newSiteList as Entry[])
+
+    if (order.includes('flowTime')) {
+      if(order.includes('asc')) {
+        newSiteList.sort((a, b) => a.flowTime - b.flowTime)
+      }
+      else {
+        newSiteList.sort((a, b) => b.flowTime - a.flowTime)
+      }
+    }
+    if (order.includes('name')) {
+      if(order.includes('asc')) {
+        newSiteList.sort((a, b) => a.name.localeCompare(b.name))
+      }
+      else {
+        newSiteList.sort((a, b) => b.name.localeCompare(a.name))
+      }
+    }
+
     setSiteList(newSiteList as Site[])
   }
 
   const filterOptions = {
-    owner: 'Omistan',
-    player: 'Pelaan',
     ll: 'Legendoja & lohikäärmeitä',
     dd: 'Dungeons & Dragons',
     hood: 'Hood',
-    thequick: 'The Quick',
+    quick: 'The Quick',
     homebrew: 'Homebrew',
     pbta: 'Powered by the Apocalypse',
     pelilauta: 'Pelilauta',
@@ -64,9 +80,10 @@ export const SiteCardList: Component<SiteCardProps> = (props) => {
         filterOptions={filterOptions}
         sortOptions={sortOptions}
         filter={[filter, setFilter]}
+        sort={[sort, setSort]}
       />
       <div>
-        {order()} - {filter()}
+        {sort()} - {filter()}
       </div>
       {siteList().map((site) => (
         filter() === '' || filter().split(';').includes(site.system || '-') ?

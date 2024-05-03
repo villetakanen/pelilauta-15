@@ -10,21 +10,19 @@ import {
   startAt,
   where,
 } from 'firebase/firestore'
-import { logDebug } from 'src/utils/logHelpers'
 
 export async function fetchSites(
   offset = 0,
   limitTo = 11,
   filter = '',
-  order = 'flowTime desc',
-  uid = '',
+  order = 'flowTime desc'
 ) {
   // Create query parameters from the function arguments
   const filterArray = filter.split(';')
   const orderDirection = order.includes('desc') ? 'desc' : 'asc'
   const orderField = order.split(' ')[0]
 
-  logDebug('fetchSites', {
+  /*logDebug('fetchSites', {
     offset,
     limitTo,
     filter,
@@ -33,7 +31,7 @@ export async function fetchSites(
     filterArray,
     orderDirection,
     orderField,
-  })
+  })*/
   // fetch public sites
   const q =
     filterArray.length > 1
@@ -57,10 +55,11 @@ export async function fetchSites(
     const site = SiteSchema.parse({
       ...doc.data(),
       key: doc.id,
+      owners: Array.isArray(doc.data().owners) ? doc.data().owners : [doc.data().owners + ''],
       flowTime: extractFlowTime(doc.data()),
     })
     siteList.push(site)
   })
-  logDebug('fetchSites length', siteList.length)
+  /*logDebug('fetchSites length', siteList.length)*/
   return siteList
 }

@@ -18,6 +18,27 @@ export const FilterPanel: Component<FilterPanelProps> = (props) => {
     }
   }
 
+  function setSort(e: Event) {
+    const button = e.target as HTMLButtonElement
+    const value = button.value
+    if (props.sort) {
+      const[sort, setSort] = props.sort
+      const originalSort = sort()
+      const originalSortArray = originalSort.split(' ') 
+      if (originalSortArray[0] === value) {
+        if (originalSortArray[1] === 'asc') {
+          setSort(value + ' desc')
+        }
+        else {
+          setSort(value + ' asc')
+        }
+      }
+      else {
+        setSort(value + ' asc')
+      }
+    }
+  }
+
   function setFilter(e: Event) {
     console.warn('set filter', e, e.target)
     const pill = e.target as CnPill
@@ -28,7 +49,8 @@ export const FilterPanel: Component<FilterPanelProps> = (props) => {
 
     if (props.filter) {
       const [filter, setFilter] = props.filter
-      const filterArray = filter().split(';')
+      const originalFilter = filter()
+      const filterArray = originalFilter.length > 0 ? originalFilter.split(';') : []
       if (checked) {
         filterArray.push(value)
       } else {
@@ -48,7 +70,7 @@ export const FilterPanel: Component<FilterPanelProps> = (props) => {
         <div style="flex: 1"></div>
         {props.sortOptions
           ? Object.keys(props.sortOptions).map((option) => (
-              <button>
+              <button value={option} onclick={setSort}>
                 {props.sortOptions ? props.sortOptions[option] : ''}
               </button>
             ))
