@@ -12,15 +12,20 @@ const { title, poster, tray } = Astro.props
 <html lang="fi">
   <BaseHead />
   <body>
-    <AppBar
-      title={title}
-      tray={tray}
-    />
+    <AppBar title={title} tray={tray} />
     <AppRail />
-    {tray ? <AppTray><slot name="tray" /></AppTray> : ''}
+    {
+      tray ? (
+        <AppTray>
+          <slot name="tray" />
+        </AppTray>
+      ) : (
+        ''
+      )
+    }
     <FabTray><slot name="fabs" /></FabTray>
     <main>
-      { poster ? <PagePoster poster={poster} /> : '' }
+      {poster ? <PagePoster poster={poster} /> : ''}
       <slot />
     </main>
   </body>

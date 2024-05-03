@@ -13,7 +13,7 @@ export const fi: TranslationKey = {
     login: {
       title: 'Kirjaudu sisään',
       info: 'Voit kirjautua palvelun käyttäjäksi käyttämällä sähköpostiosoitettasi, tai  Google-tiliäsi. Palvelu luo sinulle tunnuksen automaattisesti ensimmäisellä kirjautumiskerralla.',
-    }
+    },
   },
   account,
   actions,

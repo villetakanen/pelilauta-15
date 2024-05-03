@@ -1,5 +1,4 @@
 ---
-import SiteListItem from '../../components/sites/SiteListItem.astro'
 import { getSessionUser } from '../../firebase/server'
 import { getFirestore } from 'firebase-admin/firestore'
 import { SiteSchema } from '@schemas/Site'
@@ -7,8 +6,7 @@ import type { Site } from '@schemas/Site'
 import { t } from 'src/utils/i18n'
 import { extractFlowTime } from '../../firebase/helpers'
 import Page from '@layouts/Page.astro'
-import { FilterPanel } from '@components/solid/app/FilterPanel'
-import { SiteCardList } from '@components/solid/sites/SiteCardList'
+import { SiteCardList } from '@components/solid/sites/SiteCardList/SiteCardList'
 
 const db = getFirestore()
 const sitesRef = db.collection('sites')
@@ -57,8 +55,11 @@ sites.sort((a, b) => {
 })
 ---
 
-<Page title={t('sites:siteList.title')} poster="/images/juno-viinikka-saana-viinikka-waawaa-small.webp">
-  <SiteCardList client:load />
+<Page
+  title={t('sites:siteList.title')}
+  poster="/images/juno-viinikka-saana-viinikka-waawaa-small.webp"
+>
+  <SiteCardList client:only="solid-js" />
   <!--div class="content-cards">
     {sites.map((site) => <SiteListItem site={site} />)}
   </div-->

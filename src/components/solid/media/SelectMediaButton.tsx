@@ -21,7 +21,7 @@ export const SelectMediaButton: Component<{
 
   return (
     <button class="text">
-      <cn-icon noun="assets" onclick={handleSelectMedia}/>
+      <cn-icon noun="assets" onclick={handleSelectMedia} />
       {props.label ? <span>{props.label}</span> : ''}
       <cn-dialog id="assetDialog"></cn-dialog>
     </button>

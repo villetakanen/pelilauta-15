@@ -97,7 +97,6 @@ export const LiveStream: Component = () => {
   return (
     <div>
       <section class="flex flex-column">
-
         <For each={posts()} fallback={<LoadingCard />}>
           {(post) => <ThreadCard {...post} />}
         </For>

@@ -1,13 +1,12 @@
 import { z } from 'zod'
+import { EntrySchema } from './Entry'
 
-export const SiteSchema = z.object({
-  key: z.string(),
+export const SiteSchema = EntrySchema.extend({
   name: z.string(),
   system: z.string().optional(),
   posterURL: z.string().optional(),
   hidden: z.boolean(),
   avatarURL: z.string().optional(),
-  flowTime: z.number(),
   homepage: z.string().optional(),
   description: z.string().optional(),
   owners: z.array(z.string()),

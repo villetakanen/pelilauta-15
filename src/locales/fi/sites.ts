@@ -1,12 +1,12 @@
-import type { TranslationKey } from "src/utils/i18n";
+import type { TranslationKey } from 'src/utils/i18n'
 
-export const sites:TranslationKey = {
-  pageIndexTitle: "Sivut",
-  homePageTitle: "Etusivu",
+export const sites: TranslationKey = {
+  pageIndexTitle: 'Sivut',
+  homePageTitle: 'Etusivu',
   settings: {
-    title: "Sivuston / Wikin asetukset",
+    title: 'Sivuston / Wikin asetukset',
   },
   siteList: {
     title: 'Pelit ja sivustot',
-  }
+  },
 }

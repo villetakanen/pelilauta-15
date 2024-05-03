@@ -5,15 +5,19 @@ import '../../overrides.css'
 const { title, poster, description } = Astro.props
 
 const pageTitle = title ? `${title} – Pelilauta 2` : 'Pelilauta 2'
-const socialMediaImage = poster ? poster : Astro.url.origin + '/images/juno-viinikka-dragon-1.webp'
-const siteDescription = description ? description : 'Roolipeliwikit, sivustot ja keskustelut. Pelilauta 2 on suomalainen roolipelaamisen yhteisösovellus harrastajilta harrastajille.'
+const socialMediaImage = poster
+  ? poster
+  : Astro.url.origin + '/images/juno-viinikka-dragon-1.webp'
+const siteDescription = description
+  ? description
+  : 'Roolipeliwikit, sivustot ja keskustelut. Pelilauta 2 on suomalainen roolipelaamisen yhteisösovellus harrastajilta harrastajille.'
 ---
 
 <head>
   <meta charset="utf-8" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="generator" content={Astro.generator} />
   <meta name="theme-color" content="#efff42" />
   <link rel="canonical" href={Astro.url} />
@@ -22,9 +26,8 @@ const siteDescription = description ? description : 'Roolipeliwikit, sivustot ja
   <meta name="description" content={siteDescription} />
 
   <!-- Social Share -->
-  <meta property="og:title" content={pageTitle}>
-  <meta property="og:image" content={socialMediaImage}>
-
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:image" content={socialMediaImage} />
 
   <script>
     import '@11thdeg/cyan-next'

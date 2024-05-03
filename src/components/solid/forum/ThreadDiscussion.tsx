@@ -2,11 +2,7 @@ import { ReplySchema, type Reply } from '@schemas/Reply'
 import type { Thread } from '@schemas/Thread'
 import { createSignal, type Component, onMount, onCleanup } from 'solid-js'
 import { ThreadReply } from './ThreadReply'
-import {
-  collection,
-  onSnapshot,
-  type DocumentData,
-} from 'firebase/firestore'
+import { collection, onSnapshot, type DocumentData } from 'firebase/firestore'
 import { db } from '@firebase/client'
 import { t } from 'src/utils/i18n'
 

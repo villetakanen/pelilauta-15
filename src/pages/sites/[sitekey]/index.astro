@@ -22,7 +22,11 @@ const site = SiteSchema.parse({
 const homepageSlug = site.homepage || site.key
 ---
 
-<Page title={t('sites:homePageTitle')} poster="/images/juno-viinikka-dragon-1.webp" tray>
+<Page
+  title={t('sites:homePageTitle')}
+  poster="/images/juno-viinikka-dragon-1.webp"
+  tray
+>
   <div slot="tray">
     <SiteTray site={site} />
   </div>

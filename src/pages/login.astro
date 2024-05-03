@@ -5,14 +5,14 @@ import { t } from 'src/utils/i18n'
 import Page from '@layouts/Page.astro'
 ---
 
-<Page title={t('app:title') +' – ' + t('app:login.title')}>
+<Page title={t('app:title') + ' – ' + t('app:login.title')}>
   <div class="content-columns">
     <article class="column-l">
       <h1>{t('app:login.title')}</h1>
       <p>{t('app:login.info')}</p>
       <section class="flex flex-column border border-radius p-2">
         <div class="align-center">
-          <GoogleLoginButton />   
+          <GoogleLoginButton />
         </div>
       </section>
     </article>

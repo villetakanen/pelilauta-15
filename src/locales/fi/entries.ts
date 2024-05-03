@@ -11,6 +11,7 @@ export const entries: TranslationKey = {
   },
   sites: {
     owners: 'Omistajat',
-    ownersDescription: 'Sivuston omistajat, voivat hallinnoida kaikkea sivustolla.',
-  }
+    ownersDescription:
+      'Sivuston omistajat, voivat hallinnoida kaikkea sivustolla.',
+  },
 }

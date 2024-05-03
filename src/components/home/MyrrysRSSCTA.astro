@@ -24,21 +24,21 @@ feed.items = feed.items.slice(0, rssFeedCount)
     src="/images/LetL_gm_screen_splash.webp"
   />
   <div class="p-1 m-1">
-  <h4 class="branding downscaled border-b pb-1 mb-1">MYRRYS</h4>
-  
-  {
-    feed.items.map((item) => (
-      <div class="cta_item downscaled pb-1 border-b mb-1">
-        <h4 class="cta_title small">{item.title}</h4>
-        <p class="cta_description">{item.contentSnippet}</p>
-        <p class="align-right">
-          <a class="cta_link" href={item.link}>
-            {t('actions:readMore')}
-          </a>
-        </p>
-      </div>
-    ))
-  }
+    <h4 class="branding downscaled border-b pb-1 mb-1">MYRRYS</h4>
+
+    {
+      feed.items.map((item) => (
+        <div class="cta_item downscaled pb-1 border-b mb-1">
+          <h4 class="cta_title small">{item.title}</h4>
+          <p class="cta_description">{item.contentSnippet}</p>
+          <p class="align-right">
+            <a class="cta_link" href={item.link}>
+              {t('actions:readMore')}
+            </a>
+          </p>
+        </div>
+      ))
+    }
   </div>
 </section>
 
