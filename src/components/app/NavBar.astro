@@ -1,0 +1,45 @@
+---
+import { ProfileButton } from "@components/solid/app/ProfileButton";
+import { getSessionUser } from "@firebase/server";
+import { t } from "src/utils/i18n";
+
+const { uid } = await getSessionUser(Astro.cookies)
+
+const currentPath = Astro.url.pathname
+
+type RailItem = {
+  label?: string
+  href: string
+  icon: string
+}
+
+const links: Array<RailItem> = [
+  {
+    href: '/',
+    icon: 'veil-advance',
+  },
+  {
+    href: '/sites',
+    icon: 'mekanismi',
+    label: t('navigation:sites'),
+  }
+]
+---
+<nav id="nav-bar" >
+  {
+    links.map((item) => {
+      const isActive = currentPath === item.href
+      return (
+        <a href={item.href}>
+          <cn-navigation-icon
+            active={isActive}
+            noun={item.icon}
+            label={item.label}
+            checked={currentPath === item.href}
+          />
+        </a>
+      )
+    })
+  }
+  <ProfileButton client:only="solid-js" uid={uid} />
+</nav>

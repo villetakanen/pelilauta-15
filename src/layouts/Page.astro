@@ -5,12 +5,14 @@ import AppBar from '../components/app/AppBar.astro'
 import AppTray from '../components/app/AppTray.astro'
 import FabTray from '@components/app/FabTray.astro'
 import PagePoster from '@components/app/PagePoster.astro'
+import NavBar from '@components/app/NavBar.astro'
 
 const { title, poster, tray } = Astro.props
 ---
 
 <html lang="fi">
   <BaseHead />
+  <NavBar />
   <body>
     <AppBar title={title} tray={tray} />
     <AppRail />

@@ -45,3 +45,8 @@ header.cn-app-bar h3 {
 .hidden {
   display: none;
 }
+@media screen and (min-width: 621px) {
+  #nav-bar {
+    display: none;
+  }
+}
