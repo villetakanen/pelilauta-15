@@ -46,6 +46,7 @@ export async function fetchSites(
       : query(
           collection(db, 'sites'),
           limit(limitTo),
+          where('hidden', '==', false),
           orderBy(orderField, orderDirection),
           // startAt(offset)
         )

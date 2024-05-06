@@ -24,17 +24,16 @@ export const SiteCardList: Component<SiteCardProps> = (props) => {
   const [sort, setSort] = createSignal('flowTime desc')
 
   createEffect(() => {
-    getSites(0, 11, filter(), sort(), props.uid)
+    getSites(0, 11, filter(), sort())
   })
 
   async function getSites(
     offset = 0,
     limitTo = 11,
     filter = '',
-    order = 'flowTime desc',
-    uid = '',
+    order = 'flowTime desc'
   ) {
-    const sites = await fetchSites(offset, limitTo, filter, order, uid)
+    const sites = await fetchSites(offset, limitTo, filter, order)
     const newSiteList =[...siteList(), ...sites]
     removeDuplicates(newSiteList as Entry[])
 
@@ -82,9 +81,6 @@ export const SiteCardList: Component<SiteCardProps> = (props) => {
         filter={[filter, setFilter]}
         sort={[sort, setSort]}
       />
-      <div>
-        {sort()} - {filter()}
-      </div>
       {siteList().map((site) => (
         filter() === '' || filter().split(';').includes(site.system || '-') ?
           <SiteCard site={site} /> : ''

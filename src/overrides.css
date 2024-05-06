@@ -41,10 +41,19 @@ header.cn-app-bar h3 {
 }
 .content-cards {
   align-items: flex-start;
+  container: contentCards;
 }
 .hidden {
   display: none;
 }
+.toolbar {
+  flex-wrap:nowrap;
+  box-sizing: border-box;
+}
+.filter-panel {
+  width: calc(100cqw - 2 * var(--cn-gap))  
+}
+
 @media screen and (min-width: 621px) {
   #nav-bar {
     display: none;
