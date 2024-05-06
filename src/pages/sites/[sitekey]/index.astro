@@ -7,6 +7,7 @@ import SiteListItem from '../../../components/sites/SiteListItem.astro'
 import Page from '@layouts/Page.astro'
 import SiteTray from '@components/sites/SiteTray/SiteTray.astro'
 import { t } from 'src/utils/i18n'
+import SiteFabs from '@components/sites/SiteFabs.astro'
 
 const { sitekey } = Astro.params
 
@@ -36,4 +37,5 @@ const homepageSlug = site.homepage || site.key
       <SiteListItem site={site} />
     </div>
   </div>
+  <SiteFabs site={site} slot="fabs"/>
 </Page>

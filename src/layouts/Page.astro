@@ -25,10 +25,10 @@ const { title, poster, tray } = Astro.props
         ''
       )
     }
-    <FabTray><slot name="fabs" /></FabTray>
     <main>
       {poster ? <PagePoster poster={poster} /> : ''}
       <slot />
     </main>
+    <slot name="fabs" />
   </body>
 </html>

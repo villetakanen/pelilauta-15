@@ -1,0 +1,25 @@
+---
+import { getSessionUser } from '@firebase/server'
+import type { Site } from '@schemas/Site'
+import { t } from 'src/utils/i18n'
+
+interface Props {
+  site: Site
+}
+
+const { site } = Astro.props
+const { uid } = await getSessionUser(Astro.cookies)
+const visible = site.owners.includes(uid)
+---
+{ visible ? (
+  <div id="fab-tray">
+    <button class="fab secondary">
+      <cn-icon noun="add"></cn-icon>
+      <span class="label">{t('actions:add.page')}</span>
+    </button>
+    <button class="fab">
+      <cn-icon noun="fox"></cn-icon>
+      <span class="label">{t('actions:edit.page')}</span>
+    </button>
+  </div>
+) : ''}

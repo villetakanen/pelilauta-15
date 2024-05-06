@@ -53,9 +53,33 @@ header.cn-app-bar h3 {
 .filter-panel {
   width: calc(100cqw - 2 * var(--cn-gap))  
 }
+#fab-tray {
+  padding: var(--cn-gap);
+  bottom: calc(var(--cn-grid) * 8);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: var(--cn-gap);
+}
+.fab .label {
+  display: none;
+}
+.fab:has(.label) cn-icon{
+  margin: var(--cn-gap);
+}
 
 @media screen and (min-width: 621px) {
   #nav-bar {
     display: none;
+  }
+  #fab-tray {
+    bottom: 0;
+  }
+  .fab .label {
+    display: block;
+  }
+  .fab:has(.label) cn-icon{
+    margin-right: 0;
   }
 }
