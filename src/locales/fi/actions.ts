@@ -8,6 +8,9 @@ export const actions: TranslationKey = {
   },
   loginWithGoogle: 'Kirjaudu Googlella',
   logout: 'Kirjaudu ulos',
+  edit: {
+    page: 'Muokkaa sivua'
+  },
   readMore: 'Lue lisää',
   save: 'Tallenna',
 }

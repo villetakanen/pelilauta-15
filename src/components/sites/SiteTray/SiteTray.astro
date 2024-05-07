@@ -2,6 +2,7 @@
 import type { Site } from '@schemas/Site'
 import SiteTrayHeader from './SiteTrayHeader.astro'
 import SitePageListNav from './SitePageListNav.astro'
+import SiteTrayActions from './SiteTrayActions.astro'
 interface Props {
   site: Site
 }
@@ -9,4 +10,5 @@ const { site } = Astro.props
 ---
 
 <SiteTrayHeader site={site} />
+<SiteTrayActions site={site} />
 <SitePageListNav site={site} />

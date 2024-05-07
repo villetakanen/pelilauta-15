@@ -9,4 +9,7 @@ export const sites: TranslationKey = {
   siteList: {
     title: 'Pelit ja sivustot',
   },
+  tools: {
+    title: 'Asetukset',
+  }
 }

@@ -1,0 +1,19 @@
+---
+import { getSessionUser } from "@firebase/server"
+import type { Site } from "@schemas/Site"
+import { t } from "src/utils/i18n"
+
+const { uid } = await getSessionUser(Astro.cookies)
+interface Props {
+  site: Site
+}
+const { site } = Astro.props
+---
+{ uid ? 
+  <section class="flex toolbar px-0 mx-0">
+    <a href={`/sites/${site.key}/tools`} class="button">
+      <cn-icon noun="tools" small></cn-icon>
+      <span>{ t('sites:tools.title') }</span>
+    </a>
+  </section>
+: ''}
