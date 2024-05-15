@@ -10,7 +10,8 @@
       "@components/*": ["src/components/*"],
       "@layouts/*": ["src/layouts/*"],
       "@firebase/*": ["src/firebase/*"],
-      "@schemas/*": ["src/schemas/*"]
+      "@schemas/*": ["src/schemas/*"],
+      "@solid": ["src/components/solid"],
     }
   }
   

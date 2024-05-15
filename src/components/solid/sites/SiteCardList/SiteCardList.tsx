@@ -31,25 +31,23 @@ export const SiteCardList: Component<SiteCardProps> = (props) => {
     offset = 0,
     limitTo = 11,
     filter = '',
-    order = 'flowTime desc'
+    order = 'flowTime desc',
   ) {
     const sites = await fetchSites(offset, limitTo, filter, order)
-    const newSiteList =[...siteList(), ...sites]
+    const newSiteList = [...siteList(), ...sites]
     removeDuplicates(newSiteList as Entry[])
 
     if (order.includes('flowTime')) {
-      if(order.includes('asc')) {
+      if (order.includes('asc')) {
         newSiteList.sort((a, b) => a.flowTime - b.flowTime)
-      }
-      else {
+      } else {
         newSiteList.sort((a, b) => b.flowTime - a.flowTime)
       }
     }
     if (order.includes('name')) {
-      if(order.includes('asc')) {
+      if (order.includes('asc')) {
         newSiteList.sort((a, b) => a.name.localeCompare(b.name))
-      }
-      else {
+      } else {
         newSiteList.sort((a, b) => b.name.localeCompare(a.name))
       }
     }
@@ -81,10 +79,16 @@ export const SiteCardList: Component<SiteCardProps> = (props) => {
         filter={[filter, setFilter]}
         sort={[sort, setSort]}
       />
-      {siteList().map((site) => (
-        filter() === '' || filter().split(';').includes(site.system || '-') ?
-          <SiteCard site={site} /> : ''
-      ))}
+      {siteList().map((site) =>
+        filter() === '' ||
+        filter()
+          .split(';')
+          .includes(site.system || '-') ? (
+          <SiteCard site={site} />
+        ) : (
+          ''
+        ),
+      )}
     </div>
   )
 }

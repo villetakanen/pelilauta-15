@@ -4,13 +4,14 @@ export const actions: TranslationKey = {
   addOwner: 'Lisää omistaja',
   addThread: 'Uusi aihe',
   add: {
-    page: 'Uusi sivu'
+    page: 'Uusi sivu',
   },
   loginWithGoogle: 'Kirjaudu Googlella',
   logout: 'Kirjaudu ulos',
   edit: {
-    page: 'Muokkaa sivua'
+    page: 'Muokkaa sivua',
   },
   readMore: 'Lue lisää',
   save: 'Tallenna',
+  submit: 'Lähetä',
 }

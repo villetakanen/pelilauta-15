@@ -11,5 +11,5 @@ export const sites: TranslationKey = {
   },
   tools: {
     title: 'Asetukset',
-  }
+  },
 }

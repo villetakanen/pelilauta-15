@@ -11,15 +11,20 @@ const { site } = Astro.props
 const { uid } = await getSessionUser(Astro.cookies)
 const visible = site.owners.includes(uid)
 ---
-{ visible ? (
-  <div id="fab-tray">
-    <button class="fab secondary">
-      <cn-icon noun="add"></cn-icon>
-      <span class="label">{t('actions:add.page')}</span>
-    </button>
-    <button class="fab">
-      <cn-icon noun="edit"></cn-icon>
-      <span class="label">{t('actions:edit.page')}</span>
-    </button>
-  </div>
-) : ''}
+
+{
+  visible ? (
+    <div id="fab-tray">
+      <button class="fab secondary">
+        <cn-icon noun="add" />
+        <span class="label">{t('actions:add.page')}</span>
+      </button>
+      <button class="fab">
+        <cn-icon noun="edit" />
+        <span class="label">{t('actions:edit.page')}</span>
+      </button>
+    </div>
+  ) : (
+    ''
+  )
+}

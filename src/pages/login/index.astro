@@ -1,0 +1,23 @@
+---
+import GoogleLoginButton from '../../components/app/GoogleLoginButton.astro'
+import { t } from 'src/utils/i18n'
+import Page from '@layouts/Page.astro'
+import { EmailLoginForm } from 'src/components/solid/app/EmailLoginForm.tsx'
+---
+
+<Page title={t('app:title') + ' – ' + t('app:login.title')}>
+  <div class="content-columns">
+    <article class="column-full">
+      <h1>{t('app:login.title')}</h1>
+      <p>{t('app:login.info')}</p>
+    </article>
+    <div>
+      <EmailLoginForm client:only="solid-js" />
+    </div>
+    <section class="elevation-1 border-radius p-2">
+      <h3 class="downscaled">{t('app:login.withProvider.title')}</h3>
+      <p>{t('app:login.withProvider.info')}</p>
+      <GoogleLoginButton />
+    </section>
+  </div>
+</Page>

@@ -1,7 +1,7 @@
 ---
-import { ProfileButton } from "@components/solid/app/ProfileButton";
-import { getSessionUser } from "@firebase/server";
-import { t } from "src/utils/i18n";
+import { ProfileButton } from '@components/solid/app/ProfileButton'
+import { getSessionUser } from '@firebase/server'
+import { t } from 'src/utils/i18n'
 
 const { uid } = await getSessionUser(Astro.cookies)
 
@@ -22,10 +22,11 @@ const links: Array<RailItem> = [
     href: '/sites',
     icon: 'mekanismi',
     label: t('navigation:sites'),
-  }
+  },
 ]
 ---
-<nav id="nav-bar" >
+
+<nav id="nav-bar">
   {
     links.map((item) => {
       const isActive = currentPath === item.href

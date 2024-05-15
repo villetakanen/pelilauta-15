@@ -13,6 +13,15 @@ export const fi: TranslationKey = {
     login: {
       title: 'Kirjaudu sisään',
       info: 'Voit kirjautua palvelun käyttäjäksi käyttämällä sähköpostiosoitettasi, tai  Google-tiliäsi. Palvelu luo sinulle tunnuksen automaattisesti ensimmäisellä kirjautumiskerralla.',
+      withEmail: {
+        title: 'Kirjaudu sähköpostilla',
+        info: 'Syötä osoitteesi allaolevaan kenttään niin lähetämme sähköpostiisi maagisen linkin, jonka avulla voit kirjautua Pelilaudalle.',
+        placeholder: 'Sähköpostiosoite',
+      },
+      withProvider: {
+        title: 'Kirjaudu toisen palvelun tunnuksilla',
+        info: 'Valitse alta palvelu, jonka avulla haluat kirjautua Pelilaudalle.',
+      },
     },
   },
   account,

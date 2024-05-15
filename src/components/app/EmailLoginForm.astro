@@ -1,0 +1,20 @@
+---
+import { t } from 'src/utils/i18n'
+---
+
+<section class="elevation-1 p-2 border-radius">
+  <h3 class="downscaled">{t('app:login.withEmail.title')}</h3>
+  <p>{t('app:login.withEmail.info')}</p>
+  <form action="/api/login/email" method="post">
+    <input
+      name="email"
+      type="email"
+      placeholder={t('app:login.withEmail.placeholder')}
+      required
+    />
+    <div class="toolbar flex">
+      <div></div>
+      <button type="submit">{t('actions:submit')}</button>
+    </div>
+  </form>
+</section>

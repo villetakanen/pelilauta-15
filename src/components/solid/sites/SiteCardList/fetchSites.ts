@@ -15,7 +15,7 @@ export async function fetchSites(
   offset = 0,
   limitTo = 11,
   filter = '',
-  order = 'flowTime desc'
+  order = 'flowTime desc',
 ) {
   // Create query parameters from the function arguments
   const filterArray = filter.split(';')
@@ -56,7 +56,9 @@ export async function fetchSites(
     const site = SiteSchema.parse({
       ...doc.data(),
       key: doc.id,
-      owners: Array.isArray(doc.data().owners) ? doc.data().owners : [doc.data().owners + ''],
+      owners: Array.isArray(doc.data().owners)
+        ? doc.data().owners
+        : [doc.data().owners + ''],
       flowTime: extractFlowTime(doc.data()),
     })
     siteList.push(site)

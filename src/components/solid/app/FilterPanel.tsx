@@ -22,18 +22,16 @@ export const FilterPanel: Component<FilterPanelProps> = (props) => {
     const button = e.target as HTMLButtonElement
     const value = button.value
     if (props.sort) {
-      const[sort, setSort] = props.sort
+      const [sort, setSort] = props.sort
       const originalSort = sort()
-      const originalSortArray = originalSort.split(' ') 
+      const originalSortArray = originalSort.split(' ')
       if (originalSortArray[0] === value) {
         if (originalSortArray[1] === 'asc') {
           setSort(value + ' desc')
-        }
-        else {
+        } else {
           setSort(value + ' asc')
         }
-      }
-      else {
+      } else {
         setSort(value + ' asc')
       }
     }
@@ -50,7 +48,8 @@ export const FilterPanel: Component<FilterPanelProps> = (props) => {
     if (props.filter) {
       const [filter, setFilter] = props.filter
       const originalFilter = filter()
-      const filterArray = originalFilter.length > 0 ? originalFilter.split(';') : []
+      const filterArray =
+        originalFilter.length > 0 ? originalFilter.split(';') : []
       if (checked) {
         filterArray.push(value)
       } else {
