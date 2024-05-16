@@ -9,6 +9,7 @@ specifiers:
   '@nanostores/solid': ^0.4.2
   '@types/luxon': ^3.4.2
   '@types/turndown': ^5.0.4
+  '@vitejs/plugin-basic-ssl': ^1.1.0
   '@webcomponents/template-shadowroot': ^0.2.1
   astro: ^4.7.1
   firebase: ^10.11.1
@@ -49,6 +50,7 @@ dependencies:
 devDependencies:
   '@types/luxon': 3.4.2
   '@types/turndown': 5.0.4
+  '@vitejs/plugin-basic-ssl': 1.1.0
   prettier: 3.2.5
   prettier-plugin-astro: 0.13.0
 
@@ -2157,6 +2159,13 @@ packages:
       - encoding
       - supports-color
     dev: false
+
+  /@vitejs/plugin-basic-ssl/1.1.0:
+    resolution: {integrity: sha512-wO4Dk/rm8u7RNhOf95ZzcEmC9rYOncYgvq4z3duaJrCgjN8BxAnDVyndanfcJZ0O6XZzHz6Q0hTimxTg8Y9g/A==}
+    engines: {node: '>=14.6.0'}
+    peerDependencies:
+      vite: ^3.0.0 || ^4.0.0 || ^5.0.0
+    dev: true
 
   /@volar/kit/2.0.4_typescript@5.4.5:
     resolution: {integrity: sha512-USRx/o0jKz7o8+lEKWMxWqbqvC46XFrf3IE6CZBYzRo9kM7RERQLwUYaoT2bOcHt5DQWublpnTgdgHMm37Gysg==}

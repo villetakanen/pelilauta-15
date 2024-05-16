@@ -1,57 +1,92 @@
-import type { Component } from 'solid-js'
+import { createSignal, onMount, type Component } from 'solid-js'
+import {
+  getAuth,
+  sendSignInLinkToEmail,
+  isSignInWithEmailLink,
+  signInWithEmailLink,
+} from 'firebase/auth'
+import { app } from 'src/firebase/client'
+import { logDebug, logError } from 'src/utils/logHelpers'
 import { t } from 'src/utils/i18n'
-import { getAuth, sendSignInLinkToEmail } from "firebase/auth";
-import { logError } from 'src/utils/logHelpers';
 
 export const EmailLoginForm: Component = () => {
-
+  const [email, setEmail] = createSignal('')
+  const auth = getAuth(app)
   const actionCodeSettings = {
-    // URL you want to redirect back to. The domain (www.example.com) for this
-    // URL must be in the authorized domains list in the Firebase Console.
-    url: window.location.origin + '/login/email/confirm',
-    // This must be true.
+    url: window.location.href,
     handleCodeInApp: true,
-    dynamicLinkDomain: window.location.origin
-  };
+  }
 
-  async function sendMagicLink(e: Event) {
-    e.preventDefault()
-    const auth = getAuth()
-    const form = e.target as HTMLFormElement
-    const email = form.email.value
-
-    // check if email is valid before sending
-    if (!email) {
-      logError('Email is required, aborting')
-      return
+  onMount(() => {
+    // Check for email link on initial load
+    if (isSignInWithEmailLink(auth, window.location.href)) {
+      verifyLink() // Your verification logic
     }
+  })
 
+  const sendLink = async (e: Event) => {
+    e.preventDefault()
     try {
-      await sendSignInLinkToEmail(auth, email, actionCodeSettings)
-      window.localStorage.setItem('emailForSignIn', email)
-      alert(`Email sent to ${email}`)
+      logDebug('Sending sign-in link to email:', email())
+      logDebug('Action code settings:', actionCodeSettings)
+      window.localStorage.setItem('emailForSignIn', email())
+      await sendSignInLinkToEmail(auth, email(), actionCodeSettings)
+      // Inform the user to check their email
+    } catch (error) {
+      // Handle errors (e.g., invalid email)
+      logError(error)
+    }
+  }
+
+  // In your /verify component
+  const verifyLink = async () => {
+    try {
+      let email = window.localStorage.getItem('emailForSignIn')
+      if (!email) {
+        logError('No email found in local storage - aborting verification.')
+        return
+      }
+
+      const userCredential = await signInWithEmailLink(
+        auth,
+        email,
+        window.location.href,
+      )
+      const idToken = await userCredential.user.getIdToken()
+
+      // Send ID Token to Server
+      const response = await fetch('/api/auth/signin', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
+      })
+
+      if (!response.ok) {
+        throw new Error('Server login failed') // Or handle the error differently
+      }
+
+      // Clear email from storage.
+      window.localStorage.removeItem('emailForSignIn')
+
+      // Handle success (e.g., redirect to the dashboard)
+      window.location.href = '/'
     } catch (error) {
       logError(error)
     }
   }
 
-
   return (
-    <section class="elevation-1 p-2 border-radius">
-      <h3 class="downscaled">{t('app:login.withEmail.title')}</h3>
-      <p>{t('app:login.withEmail.info')}</p>
-      <form action="/api/login/email" method="post" onsubmit={sendMagicLink}>
+    <>
+      <form onSubmit={sendLink} class="elevation-1 border-radius p-2">
         <input
-          name="email"
           type="email"
           placeholder={t('app:login.withEmail.placeholder')}
-          required
+          value={email()}
+          onInput={(e) => setEmail(e.target.value)}
         />
-        <div class="toolbar flex">
-          <div></div>
-          <button type="submit">{t('actions:submit')}</button>
-        </div>
+        <button type="submit">{t('actions:submit')}</button>
       </form>
-    </section>
+    </>
   )
 }
