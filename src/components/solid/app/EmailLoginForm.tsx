@@ -80,15 +80,17 @@ export const EmailLoginForm: Component = () => {
 
   return (
     <section class="elevation-1 border-radius p-2">
-      {!sent() && <form onSubmit={sendLink}>
-        <input
-          type="email"
-          placeholder={t('app:login.withEmail.placeholder')}
-          value={email()}
-          onInput={(e) => setEmail(e.target.value)}
-        />
-        <button type="submit">{t('actions:submit')}</button>
-      </form>}
+      {!sent() && (
+        <form onSubmit={sendLink}>
+          <input
+            type="email"
+            placeholder={t('app:login.withEmail.placeholder')}
+            value={email()}
+            onInput={(e) => setEmail(e.target.value)}
+          />
+          <button type="submit">{t('actions:submit')}</button>
+        </form>
+      )}
       {sent() && <p>{t('app:login.withEmail.sent')}</p>}
     </section>
   )

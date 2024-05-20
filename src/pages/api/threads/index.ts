@@ -1,4 +1,4 @@
-import { getSessionUser } from '@firebase/server'
+import { getSessionUser } from '@firebase/server/server'
 import { ThreadSchema } from '@schemas/Thread'
 import type { APIRoute } from 'astro'
 import { FieldValue, type DocumentData } from 'firebase-admin/firestore'

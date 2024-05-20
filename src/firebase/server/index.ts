@@ -1,9 +1,10 @@
 import type { ServiceAccount } from 'firebase-admin'
 import admin from 'firebase-admin'
 import { initializeApp, cert } from 'firebase-admin/app'
-import { getAuth } from 'firebase-admin/auth'
-import type { AstroCookies } from 'astro'
 import { getFirestore } from 'firebase-admin/firestore'
+
+// isolated for readability
+export * from './getSessionUser'
 
 const serviceAccount = {
   type: 'service_account',
@@ -30,20 +31,3 @@ if (!admin.apps.length) {
 
 export const app = firebaseApp
 export const db = getFirestore()
-
-export async function getSessionUser(cookies: AstroCookies) {
-  const auth = getAuth(app)
-  if (cookies.has('session')) {
-    const sessionCookie = cookies.get('session')?.value
-    const decodedCookie = sessionCookie
-      ? await auth.verifySessionCookie(sessionCookie)
-      : false
-    if (decodedCookie) {
-      return {
-        uid: decodedCookie.user_id,
-        name: decodedCookie.name,
-      }
-    }
-  }
-  return { uid: '', name: '' }
-}
