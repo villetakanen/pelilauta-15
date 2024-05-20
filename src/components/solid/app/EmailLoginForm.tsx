@@ -11,6 +11,7 @@ import { t } from 'src/utils/i18n'
 
 export const EmailLoginForm: Component = () => {
   const [email, setEmail] = createSignal('')
+  const [sent, setSent] = createSignal(false)
   const auth = getAuth(app)
   const actionCodeSettings = {
     url: window.location.href,
@@ -32,6 +33,7 @@ export const EmailLoginForm: Component = () => {
       window.localStorage.setItem('emailForSignIn', email())
       await sendSignInLinkToEmail(auth, email(), actionCodeSettings)
       // Inform the user to check their email
+      setSent(true)
     } catch (error) {
       // Handle errors (e.g., invalid email)
       logError(error)
@@ -77,8 +79,8 @@ export const EmailLoginForm: Component = () => {
   }
 
   return (
-    <>
-      <form onSubmit={sendLink} class="elevation-1 border-radius p-2">
+    <section class="elevation-1 border-radius p-2">
+      {!sent() && <form onSubmit={sendLink}>
         <input
           type="email"
           placeholder={t('app:login.withEmail.placeholder')}
@@ -86,7 +88,8 @@ export const EmailLoginForm: Component = () => {
           onInput={(e) => setEmail(e.target.value)}
         />
         <button type="submit">{t('actions:submit')}</button>
-      </form>
-    </>
+      </form>}
+      {sent() && <p>{t('app:login.withEmail.sent')}</p>}
+    </section>
   )
 }
