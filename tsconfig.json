@@ -12,6 +12,7 @@
       "@firebase/*": ["src/firebase/*"],
       "@schemas/*": ["src/schemas/*"],
       "@solid": ["src/components/solid"],
+      "@utils/*": ["src/utils/*"],
     }
   }
   

@@ -11,7 +11,7 @@ import type { Site } from '@schemas/Site'
 import { db } from '../../../firebase/server'
 import { z } from 'zod'
 import { t } from 'src/utils/i18n'
-import { extractFlowTime } from '../../../firebase/helpers'
+import { extractFlowTime } from '@utils/extractFlowTime'
 
 interface Props {
   site: Site

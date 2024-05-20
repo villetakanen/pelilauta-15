@@ -12,7 +12,7 @@ import {
   startAfter,
   type DocumentData,
 } from 'firebase/firestore'
-import { extractFlowTime } from '../../../../firebase/helpers'
+import { extractFlowTime } from '@utils/extractFlowTime'
 import { ThreadSchema, type Thread } from '@schemas/Thread'
 import { ThreadCard } from './ThreadCard'
 import { LoadingCard } from './LoadingCard'

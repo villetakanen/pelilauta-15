@@ -1,5 +1,5 @@
 import { db } from '@firebase/client'
-import { extractFlowTime } from '@firebase/helpers'
+import { extractFlowTime } from 'src/utils/extractFlowTime'
 import { type Site, SiteSchema } from '@schemas/Site'
 import {
   collection,

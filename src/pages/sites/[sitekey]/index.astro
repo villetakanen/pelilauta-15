@@ -2,7 +2,7 @@
 import PageArticle from '../../../components/pages/PageArticle.astro'
 import { getFirestore } from 'firebase-admin/firestore'
 import { SiteSchema } from '@schemas/Site'
-import { extractFlowTime } from '../../../firebase/helpers'
+import { extractFlowTime } from '@utils/extractFlowTime'
 import SiteListItem from '../../../components/sites/SiteListItem.astro'
 import Page from '@layouts/Page.astro'
 import SiteTray from '@components/sites/SiteTray/SiteTray.astro'

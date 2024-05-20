@@ -4,7 +4,7 @@ import { getFirestore } from 'firebase-admin/firestore'
 import { SiteSchema } from '@schemas/Site'
 import type { Site } from '@schemas/Site'
 import { t } from 'src/utils/i18n'
-import { extractFlowTime } from '../../firebase/helpers'
+import { extractFlowTime } from '@utils/extractFlowTime'
 import Page from '@layouts/Page.astro'
 import { SiteCardList } from '@components/solid/sites/SiteCardList/SiteCardList'
 
