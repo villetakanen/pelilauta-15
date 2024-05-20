@@ -36,6 +36,7 @@ export const GET: APIRoute = async ({ request, cookies, redirect }) => {
   const account = AccountSchema.parse({
     ...accountData,
     uid,
+    eulaAccepted: accountData?.eulaAccepted ?? false, // Legacy accounts may not have this field, default to false
     lastLogin: accountData?.lastLogin?.toDate(),
     updatedAt: accountData?.updatedAt.toDate(),
   })
