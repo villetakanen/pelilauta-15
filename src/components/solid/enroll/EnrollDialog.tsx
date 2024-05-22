@@ -8,8 +8,10 @@
 
 import { db } from "@firebase/client";
 import { useStore } from "@nanostores/solid";
-import { doc, getDoc } from "firebase/firestore";
-import { createEffect, createSignal, type Component } from "solid-js";
+import { t } from "@utils/i18n";
+import { logDebug } from "@utils/logHelpers";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { createEffect, type Component } from "solid-js";
 import { $uid } from "src/store/SessionStore";
 
 export const EnrollDialog: Component = () => {
@@ -24,29 +26,64 @@ export const EnrollDialog: Component = () => {
   // -> if the user accepts, we need to update the database, and local storage
   // -> if the user cancels, we need to log the user out
   const uid = useStore($uid);
-  const [show, setShow] = createSignal(false);
 
-  const onUidChange = createEffect(async () => {
+  createEffect(async () => {
     if (!! uid()) {
+      logDebug('EnrollDialog', { uid: uid() })
       // Check if the user has accepted the terms of service
       const accepted = localStorage.getItem("enroll-accepted");
       if (accepted !== uid()) {
         // Check the database
+        logDebug('EnrollDialog', { uid: uid() }, 'Checking database for enrollment')
         // If not accepted, show the dialog
         const account = await getDoc(
           doc(db, "accounts", uid())
         )
+        logDebug('EnrollDialog', { uid: uid() }, 'Account data:', account.data())
         if (!account.data()?.eulaAccepted) {
           // Show the dialog
-          setShow(true);
+          (document.getElementById("enrollDialog") as HTMLDialogElement).showModal();
+        } else {
+          // Update local storage
+          localStorage.setItem("enroll-accepted", uid());
         }
       }
     }
   })
 
-  return (
-    <cn-dialog show={show()}>
+  async function handleAccept() {
+    // Update the database
+    await updateDoc(
+      doc(db, "accounts", uid()),
+      {
+        eulaAccepted: true
+      }
+    )
+    // Update local storage
+    localStorage.setItem("enroll-accepted", uid());
+    // Close the dialog
+    (document.getElementById("enrollDialog") as HTMLDialogElement).close();
+  }
 
+  async function handleCancel() {
+    // Remove the local storage item just in case
+    localStorage.removeItem("enroll-accepted");
+
+    // Log the user out
+    await fetch("/api/auth/logout");
+    
+    // Close the dialog
+    (document.getElementById("enrollDialog") as HTMLDialogElement).close();
+  }
+
+  return (
+    <cn-dialog>
+      <h3 slot="header">{t('app:enroll.title')}</h3>
+      <p>{t('app:enroll.description')}</p>
+      <div class="toolbar">
+        <button onClick={handleCancel}>{t('app:enroll.cancel')}</button>
+        <button onClick={handleAccept}>{t('app:enroll.accept')}</button>
+      </div>
     </cn-dialog>
   )
 }

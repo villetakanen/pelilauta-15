@@ -11,3 +11,20 @@ export const AccountSchema = z.object({
 })
 
 export type Account = z.infer<typeof AccountSchema>
+
+export function parseAccount(data: Record<string, any>, uid?: string): Account {
+
+  if (!data) throw new Error('Can not parse account data from empty object')
+  if (!data.uid && !uid) throw new Error('Can not parse account data without uid in either data or as a parameter')
+
+  return AccountSchema.parse(
+    {
+      ...data,
+      lastLogin: data.lastLogin ? new Date(data.lastLogin) : undefined,
+      updatedAt: data.updatedAt ? new Date(data.updatedAt) : new Date(),
+      uid: uid || data.uid,
+      showadminTools: data.showAdminTools ? data.showAdminTools : 'false',
+      eulaAccepted: data.eulaAccepted ? data.eulaAccepted : false
+    }
+  )
+}

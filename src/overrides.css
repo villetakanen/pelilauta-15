@@ -92,3 +92,21 @@ header.cn-app-bar h3 {
     margin-right: 0;
   }
 }
+.microinteraction-async-overlay {
+  display: none;
+}
+
+.microinteraction-async-overlay[data-active=true] {
+  background: hsla(var(--chroma-S-K-hsl), 0.44);
+  border-radius: var(--cn-border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cn-gap);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100000;
+}

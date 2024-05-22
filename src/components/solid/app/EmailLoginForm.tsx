@@ -11,6 +11,7 @@ import { t } from 'src/utils/i18n'
 
 export const EmailLoginForm: Component = () => {
   const [email, setEmail] = createSignal('')
+  const [suspend, setSuspend] = createSignal(false)
   const [sent, setSent] = createSignal(false)
   const auth = getAuth(app)
   const actionCodeSettings = {
@@ -27,6 +28,7 @@ export const EmailLoginForm: Component = () => {
 
   const sendLink = async (e: Event) => {
     e.preventDefault()
+    setSuspend(true)
     try {
       logDebug('Sending sign-in link to email:', email())
       logDebug('Action code settings:', actionCodeSettings)
@@ -38,6 +40,7 @@ export const EmailLoginForm: Component = () => {
       // Handle errors (e.g., invalid email)
       logError(error)
     }
+    setSuspend(false)
   }
 
   // In your /verify component
@@ -79,7 +82,10 @@ export const EmailLoginForm: Component = () => {
   }
 
   return (
-    <section class="elevation-1 border-radius p-2">
+    <section class="elevation-1 border-radius p-2" style="position: relative">
+      <div class="microinteraction-async-overlay" data-active={suspend()}>
+        <cn-loader></cn-loader>
+      </div>
       {!sent() && (
         <form onSubmit={sendLink}>
           <input
@@ -88,7 +94,7 @@ export const EmailLoginForm: Component = () => {
             value={email()}
             onInput={(e) => setEmail(e.target.value)}
           />
-          <button type="submit">{t('actions:submit')}</button>
+          <button type="submit" disabled={suspend()}>{t('actions:submit')}</button>
         </form>
       )}
       {sent() && <p>{t('app:login.withEmail.sent')}</p>}

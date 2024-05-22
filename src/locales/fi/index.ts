@@ -17,6 +17,7 @@ export const fi: TranslationKey = {
         title: 'Kirjaudu sähköpostilla',
         info: 'Syötä osoitteesi allaolevaan kenttään niin lähetämme sähköpostiisi maagisen linkin, jonka avulla voit kirjautua Pelilaudalle.',
         placeholder: 'Sähköpostiosoite',
+        sent: 'Kirjautumislinkki lähetetty sähköpostiisi.',
       },
       withProvider: {
         title: 'Kirjaudu toisen palvelun tunnuksilla',
