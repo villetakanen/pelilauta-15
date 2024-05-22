@@ -1,4 +1,4 @@
-import { db, getSessionUser } from '@firebase/server/server'
+import { db, getSessionUser } from '@firebase/server'
 import { ProfileSchema, type Profile } from '@schemas/Profile'
 import type { APIRoute } from 'astro'
 import { logDebug } from 'src/utils/logHelpers'

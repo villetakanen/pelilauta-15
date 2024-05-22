@@ -1,4 +1,4 @@
-import { db } from '@firebase/server/server'
+import { db } from '@firebase/server'
 import { ProfileSchema } from '@schemas/Profile'
 import type { APIRoute } from 'astro'
 

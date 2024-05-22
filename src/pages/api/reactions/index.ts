@@ -1,4 +1,4 @@
-import { db, getSessionUser } from '@firebase/server/server'
+import { db, getSessionUser } from '@firebase/server'
 import type { APIRoute } from 'astro'
 
 export const POST: APIRoute = async ({ request, cookies }) => {
