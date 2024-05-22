@@ -29,3 +29,12 @@ export function systemToNoun(system: string | undefined): string {
       return 'homebrew'
   }
 }
+
+export function toDate(variable: any): Date {
+  if (!variable) return new Date()
+  if (variable instanceof Date) return variable
+  if (typeof variable === 'string') return new Date(variable)
+  if (typeof variable === 'number') return new Date(variable)
+  if (variable?.seconds) return new Date(variable.seconds * 1000)
+  return new Date()
+}

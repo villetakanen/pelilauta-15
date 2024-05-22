@@ -1,4 +1,5 @@
 import * as z from 'zod'
+import { toDate } from './conversions'
 
 export const AccountSchema = z.object({
   eulaAccepted: z.boolean(),
@@ -20,8 +21,8 @@ export function parseAccount(data: Record<string, any>, uid?: string): Account {
   return AccountSchema.parse(
     {
       ...data,
-      lastLogin: data.lastLogin ? new Date(data.lastLogin) : undefined,
-      updatedAt: data.updatedAt ? new Date(data.updatedAt) : new Date(),
+      lastLogin: data.lastLogin ? toDate(data.lastLogin) : new Date(),
+      updatedAt: data.updatedAt ? toDate(data.updatedAt) : new Date(),
       uid: uid || data.uid,
       showadminTools: data.showAdminTools ? data.showAdminTools : 'false',
       eulaAccepted: data.eulaAccepted ? data.eulaAccepted : false
