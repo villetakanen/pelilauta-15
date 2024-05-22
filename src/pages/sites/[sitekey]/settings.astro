@@ -5,6 +5,8 @@ import { db } from '@firebase/server'
 import SettingsPage from '@layouts/SettingsPage.astro'
 import { SiteSchema } from '@schemas/Site'
 import { t } from 'src/utils/i18n'
+import { SiteCard } from '@components/solid/sites/SiteCard'
+import { SiteMetaSection } from '@components/solid/sites/SiteSettings/SiteMetaSection'
 
 const { sitekey } = Astro.params
 
@@ -21,10 +23,18 @@ const site = SiteSchema.parse({
 
 <SettingsPage title={t('sites:settings.title')}>
   <div class="content-columns">
+    <div class="column-s">
+      <SiteCard site={site} client:only="solid-js"/>
+    </div>
+    <div>
+      [SITE SETTINGS]
+      <SiteMetaSection site={site} client:load/>
+    </div>
     <div>
       <h3 class="downscaled">{t('entries:sites.owners')}</h3>
       <p>{t('entries:sites.ownersDescription')}</p>
+      <SiteOwnersTool site={site} />
     </div>
-    <SiteOwnersTool site={site} />
+    
   </div>
 </SettingsPage>
