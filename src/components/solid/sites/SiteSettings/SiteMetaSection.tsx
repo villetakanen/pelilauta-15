@@ -16,19 +16,19 @@ export const SiteMetaSection: Component<{ site: Site }> = (props) => {
 
   return (
     <section>
-      <h3>{t('site:settings.meta.title')}</h3>
+      <h3>{t('sites:settings.meta.title')}</h3>
       <fieldset>
-        <legend>{t('site:settings.meta.fieldset.title')}</legend>
+        <legend>{t('sites:settings.meta.title')}</legend>
         <label>
-          <span>{t('entries:site.name')}</span>
+          <span>{t('entries:sites.name')}</span>
           <input type="text" value={name()} />
         </label>
         <label>
-          <span>{t('entries:site.description')}</span>
+          <span>{t('entries:sites.description')}</span>
           <textarea>{description()}</textarea>
         </label>
         <label>
-          <span>{t('entries:site.system')}</span>
+          <span>{t('entries:sites.system')}</span>
           <input type="text" value={system()} />
         </label>
       </fieldset>

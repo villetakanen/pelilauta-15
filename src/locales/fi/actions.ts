@@ -12,6 +12,7 @@ export const actions: TranslationKey = {
     page: 'Muokkaa sivua',
   },
   readMore: 'Lue lisää',
+  reset: 'Nollaa',
   save: 'Tallenna',
   submit: 'Lähetä',
 }

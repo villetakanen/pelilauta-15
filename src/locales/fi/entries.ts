@@ -10,6 +10,9 @@ export const entries: TranslationKey = {
     namePlaceholder: 'Cos Sininen',
   },
   sites: {
+    name: "Sivusto / Kampanja",
+    description: 'Kuvaus',
+    system: 'Luokka',
     owners: 'Omistajat',
     ownersDescription:
       'Sivuston omistajat, voivat hallinnoida kaikkea sivustolla.',

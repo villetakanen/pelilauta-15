@@ -5,6 +5,9 @@ export const sites: TranslationKey = {
   homePageTitle: 'Etusivu',
   settings: {
     title: 'Sivuston / Wikin asetukset',
+    meta: {
+      title: 'Sivuston tiedot',
+    },
   },
   siteList: {
     title: 'Pelit ja sivustot',

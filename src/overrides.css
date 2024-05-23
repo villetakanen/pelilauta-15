@@ -92,6 +92,10 @@ header.cn-app-bar h3 {
     margin-right: 0;
   }
 }
+section h3:first-child {
+  margin-top: 0;
+}
+
 .microinteraction-async-overlay {
   display: none;
 }

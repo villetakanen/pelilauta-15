@@ -33,10 +33,9 @@ if (!site.owners.includes(uid)) {
     <div class="column-s">
       <SiteCard site={site} client:only="solid-js"/>
     </div>
-    <div>
-      [SITE SETTINGS]
+    <section>
       <SiteMetaSection site={site} client:load/>
-    </div>
+    </section>
     <div>
       <h3 class="downscaled">{t('entries:sites.owners')}</h3>
       <p>{t('entries:sites.ownersDescription')}</p>
