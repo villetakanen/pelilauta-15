@@ -1,7 +1,7 @@
 ---
 import SiteOwnersTool from '@components/sites/SiteOwnersTool/SiteOwnersTool.astro'
 import { extractFlowTime } from 'src/utils/extractFlowTime'
-import { db } from '@firebase/server'
+import { db, getSessionUser } from '@firebase/server'
 import SettingsPage from '@layouts/SettingsPage.astro'
 import { SiteSchema } from '@schemas/Site'
 import { t } from 'src/utils/i18n'
@@ -19,6 +19,13 @@ const site = SiteSchema.parse({
   key: siteDoc.id,
   flowTime: extractFlowTime(siteDoc.data()),
 })
+
+const { uid } = await getSessionUser(Astro.cookies)
+
+if (!site.owners.includes(uid)) {
+  return Astro.redirect('/login?redirect=/sites/' + site.key +'/settings')
+}
+
 ---
 
 <SettingsPage title={t('sites:settings.title')}>
