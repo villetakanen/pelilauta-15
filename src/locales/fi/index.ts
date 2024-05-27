@@ -5,6 +5,7 @@ import { account } from './account'
 import { profile } from './profile'
 import { navigation } from './navigation'
 import { sites } from './sites'
+import { footer } from './footer'
 
 export const fi: TranslationKey = {
   app: {
@@ -31,4 +32,5 @@ export const fi: TranslationKey = {
   profile,
   sites,
   navigation,
+  footer,
 }
