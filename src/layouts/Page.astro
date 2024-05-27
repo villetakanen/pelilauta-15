@@ -6,6 +6,7 @@ import AppTray from '../components/app/AppTray.astro'
 import FabTray from '@components/app/FabTray.astro'
 import PagePoster from '@components/app/PagePoster.astro'
 import NavBar from '@components/app/NavBar.astro'
+import BaseTailer from '@components/server/BaseTailer/BaseTailer.astro'
 
 const { title, poster, tray } = Astro.props
 ---
@@ -29,6 +30,7 @@ const { title, poster, tray } = Astro.props
       {poster ? <PagePoster poster={poster} /> : ''}
       <slot />
     </main>
+    <BaseTailer />
     <slot name="fabs" />
   </body>
 </html>
