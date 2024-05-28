@@ -1,11 +1,12 @@
 ---
 import { EnrollDialog } from "@components/solid/enroll/EnrollDialog";
 import CreditsSection from "./CreditsSection.astro";
-
+import AffiliatesSection from "./AffiliatesSection.astro";
 ---
 <footer>
   <div class="content-columns">
     <CreditsSection />
+    <AffiliatesSection />
   </div>
   <EnrollDialog client:only="solid-js" />
 </footer>

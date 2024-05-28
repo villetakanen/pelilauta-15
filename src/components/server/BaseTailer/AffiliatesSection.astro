@@ -1,0 +1,20 @@
+---
+import { t } from "@utils/i18n";
+
+const affiliateList:Record<string, string> = {
+  myrrys: "https://myrrys.com",
+  loki: "https://roolipeliloki.fi",
+  roolipelitiedotus: "https://roolipelitiedotus.fi",
+}
+---
+<section>
+    <h4>{t('footer:affiliates.title')}</h4>
+    <ul>
+    { Object.keys(affiliateList).map((key) => (
+      <li>
+        <a href={affiliateList[key]} target="_blank" rel="noopener noreferrer">{t(`footer:affiliates.links.${key}.title`)}</a>
+        – {t(`footer:affiliates.links.${key}.description`)}
+      </li>
+    ))}
+    </ul>
+</section>
